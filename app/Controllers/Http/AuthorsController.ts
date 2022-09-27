@@ -1,12 +1,17 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Author from 'App/Models/Author'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export default class AuthorsController {
   public async create(ctx: HttpContextContract) {
-    const input = ctx.request.only(['name', 'address'])
+    const newAuthorSchema = schema.create({
+      name: schema.string(),
+      address: schema.string(),
+    })
+    const payload = await ctx.request.validate({ schema: newAuthorSchema })
     try {
-      const author = await Author.create(input)
-      return ctx.response.status(200).json({ code: 200, status: 'success', data: author })
+      const author = await Author.create(payload)
+      return ctx.response.status(201).json({ code: 200, status: 'success', data: author })
     } catch (err) {
       return ctx.response.status(500).json({ code: 500, status: 'error', message: err.message })
     }
@@ -28,11 +33,15 @@ export default class AuthorsController {
   }
 
   public async update(ctx: HttpContextContract) {
-    const input = ctx.request.only(['name', 'address'])
+    const newAuthorSchema = schema.create({
+      name: schema.string(),
+      address: schema.string(),
+    })
+    const payload = await ctx.request.validate({ schema: newAuthorSchema })
     const id = ctx.params.id
     try {
       const author = await Author.findBy('id', id)
-      author?.merge(input)
+      author?.merge(payload)
 
       await author?.save()
 

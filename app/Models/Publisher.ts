@@ -9,7 +9,7 @@ export default class Publisher extends BaseModel {
   public name: string
 
   @column()
-  public city: string
+  public city: string | null
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

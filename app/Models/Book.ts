@@ -9,10 +9,10 @@ export default class Book extends BaseModel {
   public name: string
 
   @column()
-  public isbn: string
+  public isbn: string | null
 
   @column()
-  public year: string
+  public year: string | null
 
   @column()
   public author_id: number
