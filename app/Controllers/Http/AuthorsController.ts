@@ -11,7 +11,7 @@ export default class AuthorsController {
     const payload = await ctx.request.validate({ schema: newAuthorSchema })
     try {
       const author = await Author.create(payload)
-      return ctx.response.status(201).json({ code: 200, status: 'success', data: author })
+      return ctx.response.status(201).json({ code: 201, status: 'success', data: author })
     } catch (err) {
       return ctx.response.status(500).json({ code: 500, status: 'error', message: err.message })
     }

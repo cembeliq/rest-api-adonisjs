@@ -11,7 +11,7 @@ export default class PublishersController {
     const payload = await ctx.request.validate({ schema: newPublisherSchema })
     try {
       const publisher = await Publisher.create(payload)
-      return ctx.response.status(201).json({ code: 200, status: 'success', data: publisher })
+      return ctx.response.status(201).json({ code: 201, status: 'success', data: publisher })
     } catch (err) {
       return ctx.response.status(500).json({ code: 500, status: 'error', message: err.message })
     }

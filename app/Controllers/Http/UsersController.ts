@@ -27,7 +27,7 @@ export default class UsersController {
         email: user.email,
         role_id: userRole.role_id,
       }
-      return ctx.response.status(201).json({ code: 200, status: 'success', data: data })
+      return ctx.response.status(201).json({ code: 201, status: 'success', data: data })
     } catch (err) {
       return ctx.response.status(500).json({ code: 500, status: 'error', message: err.message })
     }
