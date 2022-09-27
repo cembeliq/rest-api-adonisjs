@@ -1,0 +1,286 @@
+-- MySQL dump 10.13  Distrib 5.5.62, for Win64 (AMD64)
+--
+-- Host: localhost    Database: percetakan
+-- ------------------------------------------------------
+-- Server version	8.0.26
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `adonis_schema`
+--
+
+DROP TABLE IF EXISTS `adonis_schema`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `adonis_schema` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  `migration_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `adonis_schema`
+--
+
+LOCK TABLES `adonis_schema` WRITE;
+/*!40000 ALTER TABLE `adonis_schema` DISABLE KEYS */;
+INSERT INTO `adonis_schema` VALUES (20,'database/migrations/1664200241007_roles',1,'2022-09-27 01:24:07'),(21,'database/migrations/1664200988664_users',1,'2022-09-27 01:24:10'),(22,'database/migrations/1664201029144_user_roles',1,'2022-09-27 01:24:20'),(23,'database/migrations/1664205419375_api_tokens',1,'2022-09-27 01:24:26'),(24,'database/migrations/1664240469707_authors',1,'2022-09-27 01:24:28'),(25,'database/migrations/1664240510321_publishers',1,'2022-09-27 01:24:30'),(26,'database/migrations/1664240517407_books',1,'2022-09-27 01:24:39');
+/*!40000 ALTER TABLE `adonis_schema` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `adonis_schema_versions`
+--
+
+DROP TABLE IF EXISTS `adonis_schema_versions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `adonis_schema_versions` (
+  `version` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `adonis_schema_versions`
+--
+
+LOCK TABLES `adonis_schema_versions` WRITE;
+/*!40000 ALTER TABLE `adonis_schema_versions` DISABLE KEYS */;
+INSERT INTO `adonis_schema_versions` VALUES (2);
+/*!40000 ALTER TABLE `adonis_schema_versions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `api_tokens`
+--
+
+DROP TABLE IF EXISTS `api_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_tokens` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `api_tokens_token_unique` (`token`),
+  KEY `api_tokens_user_id_foreign` (`user_id`),
+  CONSTRAINT `api_tokens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_tokens`
+--
+
+LOCK TABLES `api_tokens` WRITE;
+/*!40000 ALTER TABLE `api_tokens` DISABLE KEYS */;
+INSERT INTO `api_tokens` VALUES (1,1,'Opaque Access Token','api','2d2fd20ed9424d5d473cfa9f59f1030853a71f35bfd0fdcc2f235b234120ddbb',NULL,'2022-09-27 09:17:21'),(2,1,'Opaque Access Token','api','715defee58f67f43c9b811e37459c8e8dc1dd041cc53fabf87a42045d94c1a6d',NULL,'2022-09-27 09:27:47'),(3,1,'Opaque Access Token','api','dafbd01f5a0a4de21781cc1430daf54348ac477ea7d2fe6c21b2e9e5391b921d',NULL,'2022-09-27 09:32:01'),(4,1,'Opaque Access Token','api','9144eced897faa7d150079a4685347b9e4a1cdd31812d3b12676548d457755e7',NULL,'2022-09-27 09:43:21');
+/*!40000 ALTER TABLE `api_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `authors`
+--
+
+DROP TABLE IF EXISTS `authors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `authors` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `authors`
+--
+
+LOCK TABLES `authors` WRITE;
+/*!40000 ALTER TABLE `authors` DISABLE KEYS */;
+INSERT INTO `authors` VALUES (1,'john','karang sawit','2022-09-27 08:24:48','2022-09-27 08:24:48'),(2,'kennedy','rawa bolong','2022-09-27 08:24:48','2022-09-27 08:24:48'),(3,'agung','jakarta','2022-09-27 08:48:33','2022-09-27 08:48:33'),(4,'setyo','bandung','2022-09-27 08:52:10','2022-09-27 09:06:19'),(6,'agung','jakarta','2022-09-27 09:54:45','2022-09-27 09:54:45'),(7,'agung','jakarta','2022-09-27 09:55:25','2022-09-27 09:55:25'),(8,'agung','jakarta','2022-09-27 10:03:18','2022-09-27 10:03:18');
+/*!40000 ALTER TABLE `authors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `books`
+--
+
+DROP TABLE IF EXISTS `books`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `books` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isbn` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `year` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `author_id` int unsigned NOT NULL,
+  `publisher_id` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `books_author_id_foreign` (`author_id`),
+  KEY `books_publisher_id_foreign` (`publisher_id`),
+  CONSTRAINT `books_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`),
+  CONSTRAINT `books_publisher_id_foreign` FOREIGN KEY (`publisher_id`) REFERENCES `publishers` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `books`
+--
+
+LOCK TABLES `books` WRITE;
+/*!40000 ALTER TABLE `books` DISABLE KEYS */;
+INSERT INTO `books` VALUES (3,'belajar hacking','1232143435','2018',1,2,'2022-09-27 11:05:57','2022-09-27 11:05:57'),(4,'belajar algoritma','1232143435','2019',1,2,'2022-09-27 11:09:38','2022-09-27 11:09:38');
+/*!40000 ALTER TABLE `books` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `publishers`
+--
+
+DROP TABLE IF EXISTS `publishers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `publishers` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `publishers`
+--
+
+LOCK TABLES `publishers` WRITE;
+/*!40000 ALTER TABLE `publishers` DISABLE KEYS */;
+INSERT INTO `publishers` VALUES (2,'gramedia','sulang','2022-09-27 08:24:49','2022-09-27 08:24:49'),(3,'gunung agung','jakarta','2022-09-27 10:47:49','2022-09-27 10:47:49');
+/*!40000 ALTER TABLE `publishers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roles` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `roles_name_unique` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'admin','2022-09-27 08:24:50','2022-09-27 08:24:50'),(2,'user','2022-09-27 08:24:50','2022-09-27 08:24:50');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_roles`
+--
+
+DROP TABLE IF EXISTS `user_roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_roles` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL,
+  `role_id` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_roles_user_id_foreign` (`user_id`),
+  KEY `user_roles_role_id_foreign` (`role_id`),
+  CONSTRAINT `user_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_roles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+LOCK TABLES `user_roles` WRITE;
+/*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
+INSERT INTO `user_roles` VALUES (1,1,1,'2022-09-27 08:24:51','2022-09-27 08:24:51'),(2,2,2,'2022-09-27 08:24:51','2022-09-27 08:24:51'),(4,5,1,'2022-09-27 10:27:14','2022-09-27 10:27:14');
+/*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `fullname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'admin admin','admin@yopmail.com','$bcrypt$v=98$r=10$G9o8lxPbBoskQAAq1tnbmw$Lucu8rdJW+IE0wiz86tcPxVrhDlZpjw','2022-09-27 08:24:50','2022-09-27 08:24:50'),(2,'user user','user@yopmail.com','$bcrypt$v=98$r=10$ztBRy6eh6AhkDLz8WgPaAg$AYi2WVFu+GPY0FfsP942H8tuODiJkWk','2022-09-27 08:24:50','2022-09-27 08:24:50'),(5,'setyo agung nugroho','agung2@yopmail.com','$bcrypt$v=98$r=10$i9g8jKyLxbq58ZM4M0czog$fDjiJcp/dxF3mXJrABIPeWHcR6y2zjo','2022-09-27 10:27:14','2022-09-27 10:27:14');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'percetakan'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-09-27 11:16:11
